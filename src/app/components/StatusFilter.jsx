@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 export default function StatusFiilter({value, onChange}) {
-    const options = {"All", "Open", "In Progress", "On Hold", "Resolved"]};
+    const options = ["All", "Open", "In Progress", "On Hold", "Resolved"];
 
     return (
         <label style={{fontSize: "0.85rem"}}>

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {useState, useEffect, use} from "react";
 import StatusFilter from "./StatusFilter";
@@ -15,7 +15,7 @@ function randomInt(min, max) {
 function getNextStatus(current) {
     switch (current) {
         case "Open":
-            return "In Progress":
+            return "In Progress";
         case "In Progress":
             return Math.random() < 0.7 ? "Resolved" : "On Hold";
         case "On Hold":
@@ -69,7 +69,7 @@ export default function Board() {
                 const data = await res.json();
 
                 if (isMounted) {
-                    setTickets(data):
+                    setTickets(data);
                 }
             } catch (err) {
                 console.error(err);

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 export default function TicketCard({ ticket, isQueued, onAddToQueue }) {
   const updated = new Date(ticket.updatedAt).toLocaleString();
