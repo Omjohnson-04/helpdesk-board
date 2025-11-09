@@ -6,7 +6,7 @@ export default function TicketList({tickets, queue, onAddToQueue}) {
     if (!tickets || tickets.length === 0) return null;
     return (
         <div
-            classname="ticketlist"
+            className="ticketlist"
             style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",

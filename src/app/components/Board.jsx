@@ -73,7 +73,7 @@ export default function Board() {
                 }
             } catch (err) {
                 console.error(err);
-                if (isMounted) setError("Failed to laod tickets.");
+                if (isMounted) setError("Failed to load tickets.");
             } finally {
                 if (isMounted) setLoading(false);
             }

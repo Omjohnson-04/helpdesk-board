@@ -1,4 +1,6 @@
-export async function GET() {
+import {NextResponse} from "next/server";
+
+
     const tickets = [
         {"id": "t-1001",
             "title": "Cannot connect to VPN",
@@ -143,5 +145,15 @@ export async function GET() {
             "assignee": "Unassigned",
             "updatedAt": "2025-10-31T09:25:00Z"
         }
-    ]
+    ];
+
+    return new Response(JSON.stringify(tickets), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+export async function GET() {
+    return NextResponse.json(tickets);
 }

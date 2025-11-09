@@ -1,6 +1,6 @@
 'use client';
 
-export default function StatusFiilter({value, onChange}) {
+export default function StatusFilter({value, onChange}) {
     const options = ["All", "Open", "In Progress", "On Hold", "Resolved"];
 
     return (
@@ -9,7 +9,7 @@ export default function StatusFiilter({value, onChange}) {
             <select
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                style={{padding: "0.25"}}
+                style={{padding: "0.25rem"}}
             >
                 {options.map((status) => (
                     <option key={status} value={status}>
