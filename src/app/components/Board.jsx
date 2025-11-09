@@ -1,6 +1,6 @@
 'use client'
 
-import {useState, useEffect} from "react";
+import {useState, useEffect, use} from "react";
 import StatusFilter from "./StatusFilter";
 import PriorityFilter from "./PriorityFilter";
 import SearchBox from "./SearchBox";
@@ -85,4 +85,47 @@ export default function Board() {
         };
     }, []);
 
-}
+    useEffect(() => {
+        if (!tickets.length) return;
+    
+        let cancelled = false;
+        let timeoutId = null;
+    
+        const scheduleNext = () => {
+          const delay = randomInt(6000, 10000);
+          timeoutId = setTimeout(() => {
+            if (cancelled) return;
+    
+            setTickets((prev) => {
+              if (!prev.length) return prev;
+    
+              const index = Math.floor(Math.random() * prev.length);
+              const original = prev[index];
+              if (!original) return prev;
+    
+              const updated = { ...original };
+    
+              if (Math.random() < 0.5) {
+                updated.status = getNextStatus(original.status);
+              } else {
+                updated.priority = getNextPriority(original.priority);
+              }
+    
+              updated.updatedAt = new Date().toISOString();
+    
+              const next = [...prev];
+              next[index] = updated;
+              return next;
+            });
+    
+            scheduleNext();
+          }, delay);
+        };
+    
+        scheduleNext();
+    
+        return () => {
+          cancelled = true;
+          if (timeoutId) clearTimeout(timeoutId);
+        };
+    }, [tickets.length]);
