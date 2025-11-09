@@ -129,3 +129,28 @@ export default function Board() {
           if (timeoutId) clearTimeout(timeoutId);
         };
     }, [tickets.length]);
+
+    const handleStatusChange = (status) =>
+        setFilters((prev) => ({ ...prev, status }));
+    
+      const handlePriorityChange = (priority) =>
+        setFilters((prev) => ({ ...prev, priority }));
+    
+      const handleSearchChange = (value) => setSearch(value);
+    
+      const handleAddToQueue = (ticketId) => {
+        setQueue((prev) => {
+          if (prev[ticketId]) return prev; // no duplicates
+          return { ...prev, [ticketId]: true };
+        });
+      };
+    
+      const handleRemoveFromQueue = (ticketId) => {
+        setQueue((prev) => {
+          const next = { ...prev };
+          delete next[ticketId];
+          return next;
+        });
+      };
+    
+      const handleClearQueue = () => setQueue({});
