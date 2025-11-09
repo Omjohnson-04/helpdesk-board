@@ -13,6 +13,14 @@ pnpm dev
 # or
 bun dev
 ```
+Next clone or download the project files
+
+Install dependencies by:
+cd helpdesk-board
+npm install
+
+Next do:
+npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
