@@ -133,24 +133,81 @@ export default function Board() {
     const handleStatusChange = (status) =>
         setFilters((prev) => ({ ...prev, status }));
     
-      const handlePriorityChange = (priority) =>
+    const handlePriorityChange = (priority) =>
         setFilters((prev) => ({ ...prev, priority }));
     
-      const handleSearchChange = (value) => setSearch(value);
+    const handleSearchChange = (value) => setSearch(value);
     
-      const handleAddToQueue = (ticketId) => {
+    const handleAddToQueue = (ticketId) => {
         setQueue((prev) => {
           if (prev[ticketId]) return prev; // no duplicates
           return { ...prev, [ticketId]: true };
         });
-      };
+    };
     
-      const handleRemoveFromQueue = (ticketId) => {
+    const handleRemoveFromQueue = (ticketId) => {
         setQueue((prev) => {
           const next = { ...prev };
           delete next[ticketId];
           return next;
         });
-      };
+    };
     
-      const handleClearQueue = () => setQueue({});
+    const handleClearQueue = () => setQueue({});
+
+    const visibleTickets = tickets.filter((t) => {
+        const matchesStatus =
+          filters.status === "All" || t.status === filters.status;
+    
+        const matchesPriority =
+          filters.priority === "All" || t.priority === filters.priority;
+    
+        const q = search.trim().toLowerCase();
+        const text = (t.title + " " + t.description).toLowerCase();
+        const matchesSearch = !q || text.includes(q);
+    
+        return matchesStatus && matchesPriority && matchesSearch;
+      });
+    
+      const isEmpty =
+        !loading && !error && visibleTickets && visibleTickets.length === 0;
+    
+      return (
+        <section className="board">
+          <div
+            className="controls"
+            style={{
+              display: "flex",
+              gap: "1rem",
+              alignItems: "flex-end",
+              flexWrap: "wrap",
+              margin: "1rem 0"
+            }}
+          >
+            <StatusFilter value={filters.status} onChange={handleStatusChange} />
+            <PriorityFilter
+              value={filters.priority}
+              onChange={handlePriorityChange}
+            />
+            <SearchBox value={search} onChange={handleSearchChange} />
+          </div>
+    
+          <StatusMessage loading={loading} error={error} isEmpty={isEmpty} />
+    
+          {!loading && !error && visibleTickets.length > 0 && (
+            <TicketList
+              tickets={visibleTickets}
+              queue={queue}
+              onAddToQueue={handleAddToQueue}
+            />
+          )}
+    
+          <MyQueueSummary
+            tickets={tickets}
+            queue={queue}
+            onRemove={handleRemoveFromQueue}
+            onClear={handleClearQueue}
+          />
+        </section>
+      );
+    }
